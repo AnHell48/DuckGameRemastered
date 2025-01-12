@@ -14,12 +14,12 @@ public class Gun : MonoBehaviour
     {
         gunList = new List<GameObject>();
         bulletSpawnPoint = GameObject.Find("bulletSpawnPoint").transform;
-        gunRotSpeed = 1.0f;
+        gunRotSpeed = 0.2f;
         gunBounds = 0.18f;
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         PlayerController();
         Debug.Log("spawnPoint: "+bulletSpawnPoint.position);
@@ -50,7 +50,7 @@ public class Gun : MonoBehaviour
     {
         //GameObject bullet = new GameObject();
         GameObject bullet = Instantiate(Resources.Load("bullet", typeof(GameObject)), bulletSpawnPoint.position, this.transform.rotation) as GameObject;
-        bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * 20f);
+        bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * 50f);
        // bullet.transform.position = bulletSpawnPoint.position;
 
     }
