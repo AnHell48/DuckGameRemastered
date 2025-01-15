@@ -6,6 +6,7 @@ using UnityEngine;
 public class QuackManager : MonoBehaviour
 {
     [SerializeField] int objectsInRing;
+    GameObject lookAtPoint;
     List<GameObject> objectsInRingList = new List<GameObject>();
     #region Ring
     float ringRadius = 0.08f, deltaringRotation = 0.0f;
@@ -18,6 +19,7 @@ public class QuackManager : MonoBehaviour
         //gameObject.transform.position = GetComponentInParent<Transform>().position;
         //gameObject.transform.localPosition = Vector3.zero;
         ringCenter = transform.localPosition;
+        lookAtPoint = transform.Find("LookAtPoint").gameObject;
         LoadDucks();
     }
 
@@ -43,7 +45,9 @@ public class QuackManager : MonoBehaviour
             d = Instantiate(Resources.Load("nduck", typeof(GameObject)), new Vector3(newPosX, ringCenter.y, newPosZ), Quaternion.identity) as GameObject;
             d.transform.parent = transform;
             // (-1.0f * (float) q * (MathHelper.TwoPi / (float)elements_in_ring)) + MathHelper.PiOver2;
-            d.transform.Rotate(new Vector3((-1.0f * (float)i *((Mathf.PI * 2) / (float)objectsInRing)) + Mathf.PI / 2, 0, 0));
+            // d.transform.Rotate(new Vector3((-1.0f * (float)i *((Mathf.PI * 2) / (float)objectsInRing)) + Mathf.PI / 2, 0, 0));
+           // d.transform.localEulerAngles = new Vector3((-1.0f * (float)i * ((Mathf.PI * 2) / (float)objectsInRing)) + (Mathf.PI / 2), 0, 0);
+            d.transform.LookAt(lookAtPoint.transform);
             objectsInRingList.Add(d);
         }
     }
@@ -58,7 +62,8 @@ public class QuackManager : MonoBehaviour
             float newPosZ = ringCenter.z + (float)(ringRadius * Mathf.Sin((float)i * ((Mathf.PI * 2) / objectsInRing) + deltaringRotation));
 
             objectsInRingList.ElementAt(i).transform.position = new Vector3(newPosX, ringCenter.y, newPosZ);
-           // objectsInRingList.ElementAt(i).transform.Rotate(new Vector3(0,(-1.0f * (float)i *((Mathf.PI * 2) / (float)objectsInRing)) + Mathf.PI / 2, 0));
+            //objectsInRingList.ElementAt(i).transform.eulerAngles = new Vector3(0,(-1.0f * (float)i *((Mathf.PI * 2) / (float)objectsInRing)) + (Mathf.PI / 2), 0);
+            objectsInRingList.ElementAt(i).transform.LookAt(lookAtPoint.transform);
             
         } 
     }

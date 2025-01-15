@@ -22,8 +22,8 @@ public class Gun : MonoBehaviour
     void Update()
     {
         PlayerController();
-        Debug.Log("spawnPoint: "+bulletSpawnPoint.position);
-        Debug.Log("gun: "+transform.localPosition);
+        //Debug.Log("spawnPoint: "+bulletSpawnPoint.position);
+        //Debug.Log("gun: "+transform.localPosition);
     }
 
     private void PlayerController()
@@ -50,7 +50,7 @@ public class Gun : MonoBehaviour
     {
         //GameObject bullet = new GameObject();
         GameObject bullet = Instantiate(Resources.Load("bullet", typeof(GameObject)), bulletSpawnPoint.position, this.transform.rotation) as GameObject;
-        bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * 50f);
+        bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * 80f);
        // bullet.transform.position = bulletSpawnPoint.position;
 
     }

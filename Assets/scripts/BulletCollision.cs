@@ -18,7 +18,19 @@ public class BulletCollision : MonoBehaviour
         //Delete bullet if it go behind the wall
         if(transform.position.z > invisibleWall.transform.position.z)
         {
-            //Debug.Log("deletion point reached ...");
+            Debug.Log("bullet have been DELETED");
+            DeleteBullet();
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("onColl "+ collision.gameObject.name);
+
+        if(collision.gameObject.name.Contains("duck"))
+        {
+            collision.gameObject.GetComponent<AudioSource>().Play();
+            collision.gameObject.SetActive(false);
             DeleteBullet();
         }
     }
@@ -26,13 +38,14 @@ public class BulletCollision : MonoBehaviour
     private void OnTriggerEnter(Collider col)
     {
         string quack = col.gameObject.name;
-        //Debug.Log("REEEEEE");
+        Debug.Log("onTrigger");
 
         //if the bullet hit a duck then play the sound effect
         if (quack.Contains("duck"))
         {
             //play sound
             col.gameObject.GetComponent<AudioSource>().Play();
+            Debug.Log("quakyty quack MF >:C");
         }
         DeleteBullet();
     }
